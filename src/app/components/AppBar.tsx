@@ -1,12 +1,10 @@
 'use client';
-
 import {
 	Navbar,
 	NavbarContent,
 	NavbarMenuToggle,
 	NavbarBrand,
 	NavbarItem,
-	Button,
 	NavbarMenu,
 	NavbarMenuItem,
 } from '@nextui-org/react';
@@ -79,7 +77,6 @@ const AppBar = ({ children }: Props) => {
 							}
 							className="w-full"
 							href="#"
-							// size="lg"
 						>
 							{item}
 						</Link>
