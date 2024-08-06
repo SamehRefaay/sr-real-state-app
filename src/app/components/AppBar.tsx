@@ -14,7 +14,11 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
-const AppBar = () => {
+interface Props {
+	children: React.ReactNode;
+}
+
+const AppBar = ({ children }: Props) => {
 	const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
 	const menuItems = [
@@ -61,16 +65,7 @@ const AppBar = () => {
 					</Link>
 				</NavbarItem>
 			</NavbarContent>
-			<NavbarContent justify="end">
-				<NavbarItem className="hidden lg:flex">
-					<Link href="#">Login</Link>
-				</NavbarItem>
-				<NavbarItem>
-					<Button as={Link} color="primary" href="#" variant="flat">
-						Sign Up
-					</Button>
-				</NavbarItem>
-			</NavbarContent>
+			<NavbarContent justify="end">{children}</NavbarContent>
 			<NavbarMenu>
 				{menuItems.map((item, index) => (
 					<NavbarMenuItem key={`${item}-${index}`}>
