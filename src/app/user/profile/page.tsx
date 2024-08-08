@@ -16,12 +16,14 @@ const ProfilePage = async () => {
 			<PageTitle title="My Profile" href="/" linkCaption="Back to Home Page" />
 			<Card className="m-4 p-4">
 				<SectionTitle title="Basic Information" />
-				<div className="my-4 flex flex-col items-center">
-					<Avatar
-						className="w-20 h-20"
-						src={dbUser?.avatarUrl ?? '/profile.svg'}
-					/>
-					<UploadAvatar />
+				<div className="flex">
+					<div className="my-4 flex flex-col items-center">
+						<Avatar
+							className="w-40 h-40"
+							src={dbUser?.avatarUrl ?? '/profile.svg'}
+						/>
+						<UploadAvatar userId={user?.id!} />
+					</div>
 				</div>
 				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
 					<Attribute
