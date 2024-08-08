@@ -1,9 +1,10 @@
 import PageTitle from '@/app/components/PageTitle';
-import { Card } from '@nextui-org/react';
+import { Avatar, Card } from '@nextui-org/react';
 import React, { ReactNode } from 'react';
 import SectionTitle from './_components/SectionTitle';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import { getUserById } from '@/lib/actions/user';
+import UploadAvatar from './_components/UploadAvatar';
 
 const ProfilePage = async () => {
 	const { getUser } = await getKindeServerSession();
@@ -15,6 +16,13 @@ const ProfilePage = async () => {
 			<PageTitle title="My Profile" href="/" linkCaption="Back to Home Page" />
 			<Card className="m-4 p-4">
 				<SectionTitle title="Basic Information" />
+				<div className="my-4 flex flex-col items-center">
+					<Avatar
+						className="w-20 h-20"
+						src={dbUser?.avatarUrl ?? '/profile.svg'}
+					/>
+					<UploadAvatar />
+				</div>
 				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
 					<Attribute
 						title="Name"
