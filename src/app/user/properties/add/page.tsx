@@ -1,11 +1,19 @@
+import prisma from '@/lib/prisma';
 import AddPropertyForm from './_components/AddPropertyForm';
 
-const AddPropertiesPage = () => {
+const AddPropertyPage = async () => {
+	const [propertyTypes, propertyStatuses] = await Promise.all([
+		prisma.propertyType.findMany(),
+		prisma.propertyStatus.findMany(),
+	]);
 	return (
 		<div>
-			<AddPropertyForm />
+			<AddPropertyForm
+				propertyTypes={propertyTypes}
+				propertyStatuses={propertyStatuses}
+			/>
 		</div>
 	);
 };
 
-export default AddPropertiesPage;
+export default AddPropertyPage;

@@ -1,7 +1,8 @@
 'use client';
 import { useState } from 'react';
 import Stepper from './Stepper';
-import { Button } from '@nextui-org/react';
+import Basic from './Basic';
+import { PropertyStatus, PropertyType } from '@prisma/client';
 
 const steps = [
 	{ label: 'Basic' },
@@ -11,7 +12,12 @@ const steps = [
 	{ label: 'Contact' },
 ];
 
-const AddPropertyForm = () => {
+interface Props {
+	propertyTypes: PropertyType[];
+	propertyStatuses: PropertyStatus[];
+}
+
+const AddPropertyForm = (props: Props) => {
 	const [step, setStep] = useState(0);
 
 	return (
@@ -22,7 +28,9 @@ const AddPropertyForm = () => {
 				setActiveItem={setStep}
 				className="mt-4"
 			/>
-			<Button onClick={() => setStep(prev => prev + 1)}>Next</Button>
+			<form>
+				<Basic types={props.propertyTypes} statuses={props.propertyStatuses} />
+			</form>
 		</div>
 	);
 };
