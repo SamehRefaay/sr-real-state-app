@@ -40,7 +40,7 @@ const Stepper = (props: Props) => {
 					{index !== props.items.length - 1 && (
 						<div
 							className={cn(
-								'border w-full h-0 -mt-3 relative after:absolute after:top-0 after:left-0 after:border after:transition-all after:duration-300 after:ease-in',
+								'border w-full h-0 -mt-3 relative after:absolute after:top-0 after:left-0 after:-translate-y-1/2 after:border after:transition-all after:duration-300 after:ease-in',
 								{
 									'after:w-full after:border-color-pallette-aquamarine':
 										index < props.activeItem,

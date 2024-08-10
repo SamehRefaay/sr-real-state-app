@@ -28,8 +28,13 @@ const AddPropertyForm = (props: Props) => {
 				setActiveItem={setStep}
 				className="mt-4"
 			/>
-			<form>
-				<Basic types={props.propertyTypes} statuses={props.propertyStatuses} />
+			<form className="mt-3 p-2">
+				<Basic
+					className={step !== 0 ? 'hidden' : ''}
+					next={() => setStep(prev => prev + 1)}
+					types={props.propertyTypes}
+					statuses={props.propertyStatuses}
+				/>
 			</form>
 		</div>
 	);
