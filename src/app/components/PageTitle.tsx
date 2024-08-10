@@ -9,10 +9,13 @@ interface Props {
 
 const PageTitle = (props: Props) => {
 	return (
-		<div className="m-4 p-4 flex justify-between bg-gradient-to-br from-yellow-400 to-yellow-700">
+		<div className="m-4 p-4 flex justify-between bg-gradient-to-br from-color-pallette-ecru to-color-pallette-cafe-noir">
 			<h1 className="text-xl text-white font-medium">{props?.title}</h1>
 			{props.href!! && (
-				<Link className="text-white text-sm font-medium" href={props?.href}>
+				<Link
+					className="p-2 rounded-lg text-color-pallette-lavander-web bg-color-pallette-madder text-sm font-medium"
+					href={props?.href}
+				>
 					{props?.linkCaption}
 				</Link>
 			)}

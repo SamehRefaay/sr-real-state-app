@@ -38,11 +38,18 @@ const AppBar = ({ children }: Props) => {
 					aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
 					className="sm:hidden"
 				/>
-				<NavbarBrand className="flex items-center">
-					<Image src="/logo.svg" alt="logo" width={70} height={70} />
-					<p className="font-bold text-inherit text-primary-gold">
-						SRG Real State
-					</p>
+				<NavbarBrand className="">
+					<Link className="flex items-center justify-center" href="/">
+						<Image src="/logo.svg" alt="logo" width={70} height={70} />
+						<div className="flex flex-col gap-1 justify-center items-center text-color-pallette-ecru">
+							<h1 className="text-2xl font-medium leading-3 tracking-[6px]">
+								SRG
+							</h1>
+							<h6 className="text-[10px] uppercase leading-3 tracking-wider">
+								Real State
+							</h6>
+						</div>
+					</Link>
 				</NavbarBrand>
 			</NavbarContent>
 

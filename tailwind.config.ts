@@ -11,7 +11,11 @@ const config: Config = {
 	theme: {
 		extend: {
 			colors: {
-				'primary-gold': '#CDAA6B',
+				'color-pallette-madder': '#A20021',
+				'color-pallette-cafe-noir': '#312509',
+				'color-pallette-ecru': '#CDAA6B',
+				'color-pallette-lavander-web': '#E5EAFA',
+				'color-pallette-aquamarine': '#78FECF',
 			},
 			backgroundImage: {
 				'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
