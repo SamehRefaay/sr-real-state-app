@@ -21,14 +21,15 @@ model User {
 }
 
 model Property {
-  id       Int            @id @default(autoincrement())
+  id       Int               @id @default(autoincrement())
   value    String
   userId   String
-  user     User           @relation(fields: [userId], references: [id])
+  user     User              @relation(fields: [userId], references: [id])
   typeId   Int
-  type     PropertyType   @relation(fields: [typeId], references: [id])
+  type     PropertyType      @relation(fields: [typeId], references: [id])
   statusId Int
-  status   PropertyStatus @relation(fields: [statusId], references: [id])
+  status   PropertyStatus    @relation(fields: [statusId], references: [id])
+  location PropertyLocation?
 }
 
 model PropertyType {
@@ -41,4 +42,16 @@ model PropertyStatus {
   id       Int        @id @default(autoincrement())
   value    String
   Property Property[]
+}
+
+model PropertyLocation {
+  id         Int       @id @default(autoincrement())
+  address    String
+  zip        String
+  city       String
+  state      String
+  region     String
+  landmarks  String
+  property   Property? @relation(fields: [propertyId], references: [id])
+  propertyId Int?      @unique
 }
