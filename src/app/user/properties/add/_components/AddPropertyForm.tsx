@@ -5,6 +5,7 @@ import Basic from './Basic';
 import { PropertyStatus, PropertyType } from '@prisma/client';
 import Location from './Location';
 import { cn } from '@nextui-org/react';
+import Features from './Features';
 
 const steps = [
 	{ label: 'Basic' },
@@ -41,6 +42,11 @@ const AddPropertyForm = (props: Props) => {
 					prev={() => setStep(prev => prev - 1)}
 					next={() => setStep(prev => prev + 1)}
 					className={cn({ hidden: step !== 1 })}
+				/>
+				<Features
+					prev={() => setStep(prev => prev - 1)}
+					next={() => setStep(prev => prev + 1)}
+					className={cn({ hidden: step !== 2 })}
 				/>
 			</form>
 		</div>
