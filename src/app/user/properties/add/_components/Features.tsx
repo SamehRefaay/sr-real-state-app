@@ -24,6 +24,7 @@ const Features = (props: Props) => {
 				<Checkbox>Has Garden Yard</Checkbox>
 				<Checkbox>Has Balcony</Checkbox>
 			</div>
+			{/* prev button - next button */}
 			<div className="col-span-2 flex gap-3 justify-center items-center">
 				<Button
 					onClick={props.prev}

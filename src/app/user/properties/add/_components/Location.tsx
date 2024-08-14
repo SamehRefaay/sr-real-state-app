@@ -21,6 +21,7 @@ const Location = (props: Props) => {
 			<Input label="State" />
 			<Input label="Region / Neiborhood" className="col-span-2" />
 			<Textarea label="Landmarks" className="col-span-2" />
+			{/* prev button - next button */}
 			<div className="col-span-2 flex gap-3 justify-center items-center">
 				<Button
 					onClick={props.prev}

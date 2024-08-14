@@ -46,6 +46,7 @@ const Basic = (props: Props) => {
 				))}
 			</Select>
 			<Input label="Price" />
+			{/* prev button - next button */}
 			<div className="col-span-3 flex gap-3 justify-center items-center">
 				<Button
 					isDisabled
