@@ -7,6 +7,7 @@ import Location from './Location';
 import { cn } from '@nextui-org/react';
 import Features from './Features';
 import Pictures from './Pictures';
+import Contact from './Contact';
 
 const steps = [
 	{ label: 'Basic' },
@@ -56,6 +57,10 @@ const AddPropertyForm = (props: Props) => {
 					className={cn({ hidden: step !== 3 })}
 					images={images}
 					setImages={setImages}
+				/>
+				<Contact
+					prev={() => setStep(prev => prev - 1)}
+					className={cn({ hidden: step !== 4 })}
 				/>
 			</form>
 		</div>
