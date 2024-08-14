@@ -6,6 +6,7 @@ import { PropertyStatus, PropertyType } from '@prisma/client';
 import Location from './Location';
 import { cn } from '@nextui-org/react';
 import Features from './Features';
+import Pictures from './Pictures';
 
 const steps = [
 	{ label: 'Basic' },
@@ -22,6 +23,7 @@ interface Props {
 
 const AddPropertyForm = (props: Props) => {
 	const [step, setStep] = useState(0);
+	const [images, setImages] = useState<File[]>([]);
 
 	return (
 		<div>
@@ -47,6 +49,13 @@ const AddPropertyForm = (props: Props) => {
 					prev={() => setStep(prev => prev - 1)}
 					next={() => setStep(prev => prev + 1)}
 					className={cn({ hidden: step !== 2 })}
+				/>
+				<Pictures
+					prev={() => setStep(prev => prev - 1)}
+					next={() => setStep(prev => prev + 1)}
+					className={cn({ hidden: step !== 3 })}
+					images={images}
+					setImages={setImages}
 				/>
 			</form>
 		</div>

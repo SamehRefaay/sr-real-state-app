@@ -17,7 +17,7 @@ model User {
   email     String
   avatarUrl String?
   createdAt DateTime   @default(now())
-  Property  Property[]
+  property  Property[]
 }
 
 model Property {
@@ -33,6 +33,7 @@ model Property {
   status      PropertyStatus    @relation(fields: [statusId], references: [id])
   location    PropertyLocation?
   feature     PropertyFeature?
+  images      PropertyImage[]
 }
 
 model PropertyType {
@@ -70,4 +71,11 @@ model PropertyFeature {
   hasBalcony      Boolean
   property        Property @relation(fields: [propertyId], references: [id])
   propertyId      Int      @unique
+}
+
+model PropertyImage {
+  id         Int      @id @default(autoincrement())
+  url        String
+  property   Property @relation(fields: [propertyId], references: [id])
+  propertyId Int
 }
