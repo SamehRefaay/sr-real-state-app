@@ -1,5 +1,7 @@
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/16/solid';
 import { Button, Card, Checkbox, cn, Input } from '@nextui-org/react';
+import { Controller, useFormContext } from 'react-hook-form';
+import { addPropertyInputType } from './AddPropertyForm';
 
 interface Props {
 	prev: () => void;
@@ -8,6 +10,25 @@ interface Props {
 }
 
 const Features = (props: Props) => {
+	const {
+		register,
+		control,
+		formState: { errors },
+		trigger,
+	} = useFormContext<addPropertyInputType>();
+
+	const handleNext = async () => {
+		if (
+			await trigger([
+				'propertyFeature.bedrooms',
+				'propertyFeature.bathrooms',
+				'propertyFeature.area',
+				'propertyFeature.parkingSpots',
+			])
+		)
+			props.next();
+	};
+
 	return (
 		<Card
 			className={cn(
@@ -15,14 +36,58 @@ const Features = (props: Props) => {
 				props.className
 			)}
 		>
-			<Input label="Bedrooms" />
-			<Input label="Bathrooms" />
-			<Input label="Parking Spots" />
-			<Input label="Area" />
+			<Input
+				{...register('propertyFeature.bedrooms')}
+				errorMessage={errors.propertyFeature?.bedrooms?.message}
+				isInvalid={!!errors.propertyFeature?.bedrooms}
+				label="Bedrooms"
+			/>
+			<Input
+				{...register('propertyFeature.bathrooms')}
+				errorMessage={errors.propertyFeature?.bathrooms?.message}
+				isInvalid={!!errors.propertyFeature?.bathrooms}
+				label="Bathrooms"
+			/>
+			<Input
+				{...register('propertyFeature.parkingSpots')}
+				errorMessage={errors.propertyFeature?.parkingSpots?.message}
+				isInvalid={!!errors.propertyFeature?.parkingSpots}
+				label="Parking Spots"
+			/>
+			<Input
+				{...register('propertyFeature.area')}
+				errorMessage={errors.propertyFeature?.area?.message}
+				isInvalid={!!errors.propertyFeature?.area}
+				label="Area"
+			/>
 			<div className="flex items-center justify-between">
-				<Checkbox>Has Swimming Pool</Checkbox>
-				<Checkbox>Has Garden Yard</Checkbox>
-				<Checkbox>Has Balcony</Checkbox>
+				<Controller
+					control={control}
+					name="propertyFeature.hasSwimmingPool"
+					render={({ field }) => (
+						<Checkbox onChange={field.onChange} onBlur={field.onBlur}>
+							Has Swimming Pool
+						</Checkbox>
+					)}
+				/>
+				<Controller
+					control={control}
+					name="propertyFeature.hasGardenYard"
+					render={({ field }) => (
+						<Checkbox onChange={field.onChange} onBlur={field.onBlur}>
+							Has Garden Yard
+						</Checkbox>
+					)}
+				/>
+				<Controller
+					control={control}
+					name="propertyFeature.hasBalcony"
+					render={({ field }) => (
+						<Checkbox onChange={field.onChange} onBlur={field.onBlur}>
+							Has Balcony
+						</Checkbox>
+					)}
+				/>
 			</div>
 			{/* prev button - next button */}
 			<div className="col-span-2 flex gap-3 justify-center items-center">
@@ -34,7 +99,7 @@ const Features = (props: Props) => {
 					Previous
 				</Button>
 				<Button
-					onClick={props.next}
+					onClick={handleNext}
 					className="w-36 bg-color-pallette-madder text-white"
 					endContent={<ChevronRightIcon className="w-6" />}
 				>

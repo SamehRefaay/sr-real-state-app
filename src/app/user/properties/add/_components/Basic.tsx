@@ -10,6 +10,9 @@ import {
 	Textarea,
 } from '@nextui-org/react';
 import { PropertyStatus, PropertyType } from '@prisma/client';
+import { useFormContext } from 'react-hook-form';
+import { addPropertyInputType } from './AddPropertyForm';
+import { error } from 'console';
 
 interface Props {
 	types: PropertyType[];
@@ -19,8 +22,15 @@ interface Props {
 }
 
 const Basic = (props: Props) => {
-	const handleNext = () => {
-		props.next();
+	const {
+		register,
+		trigger,
+		formState: { errors },
+	} = useFormContext<addPropertyInputType>();
+
+	const handleNext = async () => {
+		if (await trigger(['name', 'description', 'typeId', 'statusId', 'price']))
+			props.next();
 	};
 	return (
 		<Card
@@ -29,23 +39,56 @@ const Basic = (props: Props) => {
 				props.className
 			)}
 		>
-			<Input label="Name" className="col-span-3" />
-			<Textarea label="Description" className="col-span-3" />
-			<Select label="Type" selectionMode="single">
+			<Input
+				{...register('name')}
+				errorMessage={errors?.name?.message}
+				isInvalid={!!errors?.name}
+				label="Name"
+				className="col-span-3"
+			/>
+			<Textarea
+				{...register('description')}
+				errorMessage={errors.description?.message}
+				isInvalid={!!errors.description}
+				label="Description"
+				className="col-span-3"
+			/>
+
+			{/* Property Type Id */}
+			<Select
+				{...register('typeId')}
+				errorMessage={errors.typeId?.message}
+				isInvalid={!!errors.typeId}
+				label="Type"
+				selectionMode="single"
+			>
 				{props.types?.map(item => (
 					<SelectItem key={item.id} value={item.id}>
 						{item.value}
 					</SelectItem>
 				))}
 			</Select>
-			<Select label="Status" selectionMode="single">
+
+			{/* Property Status Id */}
+			<Select
+				{...register('statusId')}
+				errorMessage={errors.statusId?.message}
+				isInvalid={!!errors.statusId}
+				label="Status"
+				selectionMode="single"
+			>
 				{props.statuses?.map(item => (
 					<SelectItem key={item.id} value={item.id}>
 						{item.value}
 					</SelectItem>
 				))}
 			</Select>
-			<Input label="Price" />
+			<Input
+				{...register('price')}
+				errorMessage={errors.price?.message}
+				isInvalid={!!errors.price}
+				label="Price"
+			/>
 			{/* prev button - next button */}
 			<div className="col-span-3 flex gap-3 justify-center items-center">
 				<Button

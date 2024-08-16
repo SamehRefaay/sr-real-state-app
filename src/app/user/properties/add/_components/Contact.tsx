@@ -1,5 +1,7 @@
 import { ChevronLeftIcon, PlusIcon } from '@heroicons/react/16/solid';
 import { Button, Card, cn, Input } from '@nextui-org/react';
+import { useFormContext } from 'react-hook-form';
+import { addPropertyInputType } from './AddPropertyForm';
 
 interface Props {
 	prev: () => void;
@@ -7,6 +9,11 @@ interface Props {
 }
 
 const Contact = (props: Props) => {
+	const {
+		register,
+		formState: { errors },
+	} = useFormContext<addPropertyInputType>();
+
 	return (
 		<Card
 			className={cn(
@@ -14,9 +21,24 @@ const Contact = (props: Props) => {
 				props.className
 			)}
 		>
-			<Input label="Contact Name" />
-			<Input label="Phone" />
-			<Input label="Email" />
+			<Input
+				{...register('contact.name')}
+				errorMessage={errors.contact?.name?.message}
+				isInvalid={!!errors.contact?.name}
+				label="Contact Name"
+			/>
+			<Input
+				{...register('contact.phone')}
+				errorMessage={errors.contact?.phone?.message}
+				isInvalid={!!errors.contact?.phone}
+				label="Phone"
+			/>
+			<Input
+				{...register('contact.email')}
+				errorMessage={errors.contact?.email?.message}
+				isInvalid={!!errors.contact?.email}
+				label="Email"
+			/>
 			{/* prev button - next button */}
 			<div className="md:col-span-3 flex gap-3 justify-center items-center">
 				<Button
