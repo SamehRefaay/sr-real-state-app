@@ -51,6 +51,7 @@ const Contact = (props: Props) => {
 				<Button
 					className="w-36 bg-color-pallette-aquamarine text-color-pallette-cafe-noir"
 					endContent={<PlusIcon className="w-6" />}
+					type="submit"
 				>
 					Save
 				</Button>

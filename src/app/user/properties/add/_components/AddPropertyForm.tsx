@@ -10,8 +10,11 @@ import Pictures from './Pictures';
 import Contact from './Contact';
 import { addPropertyFormSchema } from '@/lib/zodSchema';
 import { z } from 'zod';
-import { FormProvider, useForm } from 'react-hook-form';
+import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { uploadPropertyImages } from '@/lib/upload';
+import { saveProperty } from '@/lib/actions/property';
+import { useKindeBrowserClient } from '@kinde-oss/kinde-auth-nextjs';
 
 const steps = [
 	{ label: 'Basic' },
@@ -31,10 +34,19 @@ export type addPropertyInputType = z.infer<typeof addPropertyFormSchema>;
 const AddPropertyForm = (props: Props) => {
 	const [step, setStep] = useState(0);
 	const [images, setImages] = useState<File[]>([]);
+	const { user } = useKindeBrowserClient();
 
 	const methods = useForm<addPropertyInputType>({
 		resolver: zodResolver(addPropertyFormSchema),
 	});
+
+	const onSubmit: SubmitHandler<addPropertyInputType> = async data => {
+		console.log(data);
+		const urls = await uploadPropertyImages(images);
+		console.log(urls);
+
+		await saveProperty(data, urls, user?.id!);
+	};
 
 	return (
 		<div>
@@ -45,7 +57,12 @@ const AddPropertyForm = (props: Props) => {
 				className="mt-4"
 			/>
 			<FormProvider {...methods}>
-				<form className="mt-3 p-2">
+				<form
+					className="mt-3 p-2"
+					onSubmit={methods.handleSubmit(onSubmit, errors =>
+						console.log(errors)
+					)}
+				>
 					<Basic
 						next={() => setStep(prev => prev + 1)}
 						className={cn({ hidden: step !== 0 })}
