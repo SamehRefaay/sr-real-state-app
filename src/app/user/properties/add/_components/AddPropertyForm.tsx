@@ -15,6 +15,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { uploadPropertyImages } from '@/lib/upload';
 import { saveProperty } from '@/lib/actions/property';
 import { useKindeBrowserClient } from '@kinde-oss/kinde-auth-nextjs';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useRouter } from 'next/navigation';
 
 const steps = [
 	{ label: 'Basic' },
@@ -35,17 +38,22 @@ const AddPropertyForm = (props: Props) => {
 	const [step, setStep] = useState(0);
 	const [images, setImages] = useState<File[]>([]);
 	const { user } = useKindeBrowserClient();
+	const router = useRouter();
 
 	const methods = useForm<addPropertyInputType>({
 		resolver: zodResolver(addPropertyFormSchema),
 	});
 
 	const onSubmit: SubmitHandler<addPropertyInputType> = async data => {
-		console.log(data);
 		const urls = await uploadPropertyImages(images);
-		console.log(urls);
-
-		await saveProperty(data, urls, user?.id!);
+		try {
+			await saveProperty(data, urls, user?.id!);
+			toast.success('Property added successfully!');
+		} catch (error) {
+			console.error({ 'some thing went wrong': error });
+		} finally {
+			router.push('/user/properties');
+		}
 	};
 
 	return (
