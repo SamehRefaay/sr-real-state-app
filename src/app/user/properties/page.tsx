@@ -6,7 +6,7 @@ interface Props {
 	searchParams: { [key: string]: string | string[] | undefined };
 }
 
-const PAGE_SIZE = 1;
+const PAGE_SIZE = 12;
 
 const PropertiesPage = async ({ searchParams }: Props) => {
 	const { getUser } = getKindeServerSession();

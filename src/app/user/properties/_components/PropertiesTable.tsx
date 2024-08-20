@@ -48,7 +48,7 @@ const PropertiesTable = ({ properties, totalPages, currentPage }: Props) => {
 							<TableCell>
 								<div className="flex gap-3">
 									<Tooltip content="Details">
-										<Link href={`/properties/${item.id}`}>
+										<Link href={`/property/${item.id}`}>
 											<EyeIcon className="w-5 text-slate-600" />{' '}
 										</Link>
 									</Tooltip>
