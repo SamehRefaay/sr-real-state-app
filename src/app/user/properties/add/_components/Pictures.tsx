@@ -2,6 +2,7 @@ import FileInput from '@/app/components/FileUpload';
 import { Button, Card, cn } from '@nextui-org/react';
 import { ImageCard } from './ImageCard';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/16/solid';
+import { PropertyImage } from '@prisma/client';
 
 interface Props {
 	prev: () => void;
@@ -9,6 +10,8 @@ interface Props {
 	images: File[];
 	setImages: (images: File[]) => void;
 	className?: string;
+	savedImages?: PropertyImage[];
+	setSavedImages?: (images: PropertyImage[]) => void;
 }
 
 const Pictures = (props: Props) => {
@@ -26,7 +29,27 @@ const Pictures = (props: Props) => {
 					props.setImages([(e as any).target.files[0], ...props.images])
 				}
 			/>
+
 			<div className="mt-3 flex flex-wrap gap-3">
+				{/* show fetched images from database for edit property page */}
+				{props.savedImages &&
+					props.setSavedImages!! &&
+					props.savedImages?.map((item, index) => {
+						return (
+							<ImageCard
+								key={item?.id}
+								src={item?.url}
+								index={index}
+								onDelete={i =>
+									props.setSavedImages!([
+										...props.savedImages!.slice(0, i),
+										...props.savedImages!.slice(i + 1),
+									])
+								}
+							/>
+						);
+					})}
+				{/* /* show images selected for add new property */}
 				{props.images?.map((item, index) => {
 					const srcUrl = URL.createObjectURL(item);
 					return (
@@ -39,6 +62,7 @@ const Pictures = (props: Props) => {
 					);
 				})}
 			</div>
+
 			{/* prev button - next button */}
 			<div className="flex gap-3 justify-center items-center">
 				<Button

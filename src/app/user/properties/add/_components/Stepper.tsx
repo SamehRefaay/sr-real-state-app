@@ -13,11 +13,8 @@ const Stepper = (props: Props) => {
 			{props.items.map((item, index) => (
 				<>
 					<div
-						key={item.label}
-						className={cn(
-							'flex flex-col items-center text-color-pallette-cafe-noir',
-							props.className
-						)}
+						key={'0' + index}
+						className="flex flex-col items-center text-color-pallette-cafe-noir"
 					>
 						<div
 							className={cn(

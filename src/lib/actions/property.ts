@@ -38,3 +38,48 @@ export async function saveProperty(
 	console.log({ result });
 	return result;
 }
+export async function editProperty(
+	propertyId: number,
+	propertyData: addPropertyInputType,
+	newImagesUrls: string[],
+	deletedImagesIds: number[]
+) {
+	const result = await prisma.property.update({
+		where: {
+			id: propertyId,
+		},
+		data: {
+			name: propertyData.name,
+			description: propertyData.description,
+			price: propertyData.price,
+			typeId: propertyData.typeId,
+			statusId: propertyData.statusId,
+			location: {
+				update: {
+					...propertyData.location,
+				},
+			},
+			feature: {
+				update: {
+					...propertyData.propertyFeature,
+				},
+			},
+			contact: {
+				update: {
+					...propertyData.contact,
+				},
+			},
+			images: {
+				create: newImagesUrls.map(imageUrl => ({ url: imageUrl })),
+				deleteMany: {
+					id: {
+						in: deletedImagesIds,
+					},
+				},
+			},
+		},
+	});
+
+	console.log({ result });
+	return result;
+}

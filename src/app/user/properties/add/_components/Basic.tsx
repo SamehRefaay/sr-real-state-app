@@ -12,7 +12,6 @@ import {
 import { PropertyStatus, PropertyType } from '@prisma/client';
 import { useFormContext } from 'react-hook-form';
 import { addPropertyInputType } from './AddPropertyForm';
-import { error } from 'console';
 
 interface Props {
 	types: PropertyType[];
@@ -25,6 +24,7 @@ const Basic = (props: Props) => {
 	const {
 		register,
 		trigger,
+		getValues,
 		formState: { errors },
 	} = useFormContext<addPropertyInputType>();
 
@@ -32,6 +32,7 @@ const Basic = (props: Props) => {
 		if (await trigger(['name', 'description', 'typeId', 'statusId', 'price']))
 			props.next();
 	};
+
 	return (
 		<Card
 			className={cn(
@@ -45,6 +46,8 @@ const Basic = (props: Props) => {
 				isInvalid={!!errors?.name}
 				label="Name"
 				className="col-span-3"
+				name="name"
+				defaultValue={getValues().name}
 			/>
 			<Textarea
 				{...register('description')}
@@ -52,15 +55,18 @@ const Basic = (props: Props) => {
 				isInvalid={!!errors.description}
 				label="Description"
 				className="col-span-3"
+				name="description"
+				defaultValue={getValues().description}
 			/>
-
 			{/* Property Type Id */}
 			<Select
-				{...register('typeId')}
+				{...register('typeId', { setValueAs: (v: any) => v.toString() })}
 				errorMessage={errors.typeId?.message}
 				isInvalid={!!errors.typeId}
 				label="Type"
 				selectionMode="single"
+				name="typeId"
+				defaultSelectedKeys={[getValues().typeId?.toString()]}
 			>
 				{props.types?.map(item => (
 					<SelectItem key={item.id} value={item.id}>
@@ -68,14 +74,15 @@ const Basic = (props: Props) => {
 					</SelectItem>
 				))}
 			</Select>
-
 			{/* Property Status Id */}
 			<Select
-				{...register('statusId')}
+				{...register('statusId', { setValueAs: (v: any) => v.toString() })}
 				errorMessage={errors.statusId?.message}
 				isInvalid={!!errors.statusId}
 				label="Status"
 				selectionMode="single"
+				name="statusId"
+				defaultSelectedKeys={[getValues().statusId?.toString()]}
 			>
 				{props.statuses?.map(item => (
 					<SelectItem key={item.id} value={item.id}>
@@ -84,10 +91,12 @@ const Basic = (props: Props) => {
 				))}
 			</Select>
 			<Input
-				{...register('price')}
+				{...register('price', { setValueAs: (v: any) => v.toString() })}
 				errorMessage={errors.price?.message}
 				isInvalid={!!errors.price}
 				label="Price"
+				name="price"
+				defaultValue={getValues().price?.toString()}
 			/>
 			{/* prev button - next button */}
 			<div className="col-span-3 flex gap-3 justify-center items-center">
