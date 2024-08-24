@@ -1,6 +1,7 @@
 import prisma from '@/lib/prisma';
 import AddPropertyForm from '../../add/_components/AddPropertyForm';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
+import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 
 interface Props {
 	params: {
@@ -9,6 +10,9 @@ interface Props {
 }
 
 const EditPropertyPage = async ({ params }: Props) => {
+	const { getUser } = getKindeServerSession();
+	const user = await getUser();
+
 	const [property, propertyTypes, propertyStatus] = await Promise.all([
 		prisma.property.findUnique({
 			where: { id: +params?.id },
@@ -24,6 +28,7 @@ const EditPropertyPage = async ({ params }: Props) => {
 	]);
 
 	if (!property) return notFound();
+	if (!user || property.userId !== user.id) redirect('/unauthorized');
 	return (
 		<div>
 			<AddPropertyForm
