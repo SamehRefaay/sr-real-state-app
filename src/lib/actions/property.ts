@@ -34,8 +34,6 @@ export async function saveProperty(
 			},
 		},
 	});
-
-	console.log({ result });
 	return result;
 }
 export async function editProperty(
@@ -79,7 +77,14 @@ export async function editProperty(
 			},
 		},
 	});
+	return result;
+}
 
-	console.log({ result });
+export async function deleteProperty(id: number) {
+	const result = prisma.property.delete({
+		where: {
+			id,
+		},
+	});
 	return result;
 }

@@ -4,7 +4,6 @@ import Stepper from './Stepper';
 import Basic from './Basic';
 import {
 	Prisma,
-	Property,
 	PropertyImage,
 	PropertyStatus,
 	PropertyType,
