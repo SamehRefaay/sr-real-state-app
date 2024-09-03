@@ -2,7 +2,13 @@ import { Button } from '@nextui-org/react';
 import Link from 'next/link';
 import { ReactNode } from 'react';
 
-const PropertiesLayout = ({ children }: { children: ReactNode }) => {
+const PropertiesLayout = ({
+	children,
+	modalDelete,
+}: {
+	children: ReactNode;
+	modalDelete: ReactNode;
+}) => {
 	return (
 		<>
 			<div className="bg-color-pallette-ecru flex justify-between items-center p-2">
@@ -14,6 +20,7 @@ const PropertiesLayout = ({ children }: { children: ReactNode }) => {
 				</Button>
 			</div>
 			<div>{children}</div>
+			<div>{modalDelete}</div>
 		</>
 	);
 };
