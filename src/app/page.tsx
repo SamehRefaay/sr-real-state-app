@@ -1,5 +1,7 @@
+import { contains } from 'validator';
 import { prisma } from '../lib/prisma';
 import PropertiesContainer from './components/PropertiesContainer';
+import Search from './components/Search';
 
 const PAGE_SIZE = 12;
 
@@ -9,6 +11,7 @@ interface Props {
 
 export default async function Home({ searchParams }: Props) {
 	const pagenum = searchParams.pagenum ?? 0;
+	const query = searchParams.query ?? '';
 	const propertiesPromise = prisma.property.findMany({
 		select: {
 			id: true,
@@ -26,11 +29,26 @@ export default async function Home({ searchParams }: Props) {
 				},
 			},
 		},
+		...(!!query && {
+			where: {
+				name: {
+					contains: String(query),
+				},
+			},
+		}),
 		skip: +pagenum * PAGE_SIZE,
 		take: PAGE_SIZE,
 	});
 
-	const totalPropertiesPromise = prisma.property.count();
+	const totalPropertiesPromise = prisma.property.count({
+		...(!!query && {
+			where: {
+				name: {
+					contains: String(query),
+				},
+			},
+		}),
+	});
 
 	const [properties, propertiesCount] = await Promise.all([
 		propertiesPromise,
@@ -40,7 +58,11 @@ export default async function Home({ searchParams }: Props) {
 	const totalPages = Math.floor(propertiesCount / PAGE_SIZE);
 
 	return (
-		<main className="p-5">
+		<main className="flex flex-col gap-10 mt-4 p-4">
+			{/* search bar */}
+			<Search />
+
+			{/* show properties */}
 			<PropertiesContainer
 				properties={properties}
 				totalPages={totalPages}

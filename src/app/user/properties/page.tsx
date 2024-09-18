@@ -13,7 +13,7 @@ const PropertiesPage = async ({ searchParams }: Props) => {
 	const user = await getUser();
 
 	const pagenum = searchParams.pagenum ?? 0;
-
+	const query = searchParams.query ?? '';
 	const propertiesPromise = prisma.property.findMany({
 		where: {
 			userId: user?.id,
@@ -22,6 +22,7 @@ const PropertiesPage = async ({ searchParams }: Props) => {
 			type: true,
 			status: true,
 		},
+
 		skip: +pagenum * PAGE_SIZE,
 		take: PAGE_SIZE,
 	});

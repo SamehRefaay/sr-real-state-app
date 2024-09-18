@@ -29,6 +29,7 @@ interface Props {
 
 const PropertiesContainer = (props: Props) => {
 	const router = useRouter();
+	console.log(props.totalPages);
 	return (
 		<div className="flex flex-col gap-4 justify-center items-center">
 			<div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
@@ -36,12 +37,15 @@ const PropertiesContainer = (props: Props) => {
 					<PropertyCard key={propertyItem.id} property={propertyItem} />
 				))}
 			</div>
-			<Pagination
-				total={props.totalPages}
-				initialPage={1}
-				page={props.currentPage}
-				onChange={page => router.push(`/?pagenum=${page}`)}
-			/>
+
+			{props.totalPages > 1 && (
+				<Pagination
+					total={props.totalPages}
+					initialPage={1}
+					page={props.currentPage}
+					onChange={page => router.push(`/?pagenum=${page}`)}
+				/>
+			)}
 		</div>
 	);
 };
