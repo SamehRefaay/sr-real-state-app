@@ -1,10 +1,11 @@
 import PageTitle from '@/app/components/PageTitle';
-import { Avatar, Card } from '@nextui-org/react';
+import { Avatar, Button, Card } from '@nextui-org/react';
 import React, { ReactNode } from 'react';
 import SectionTitle from './_components/SectionTitle';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import { getUserById } from '@/lib/actions/user';
 import UploadAvatar from './_components/UploadAvatar';
+import Link from 'next/link';
 
 const ProfilePage = async () => {
 	const { getUser } = await getKindeServerSession();
@@ -37,6 +38,13 @@ const ProfilePage = async () => {
 					/>
 					<Attribute title="Properties Posted" value={1} />
 				</div>
+			</Card>
+			<Card className="m-4 p-4">
+				<SectionTitle title="Subscription Information" />
+				{/* todo adding user subscription plan info */}
+				<Button color="primary">
+					<Link href="/user/subscription">Purchase Your Subscription</Link>
+				</Button>
 			</Card>
 		</div>
 	);

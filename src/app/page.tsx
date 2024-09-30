@@ -1,4 +1,3 @@
-import { contains } from 'validator';
 import { prisma } from '../lib/prisma';
 import PropertiesContainer from './components/PropertiesContainer';
 import Search from './components/Search';
