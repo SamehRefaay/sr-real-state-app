@@ -46,7 +46,11 @@ const SubscriptionButton = ({ plan }: { plan: SubscriptionPlan }) => {
 					stripe={stripePromise}
 					options={{ clientSecret: clientSecret }}
 				>
-					<CheckoutForm show={showCheckout} setShow={setShowCheckout} />
+					<CheckoutForm
+						show={showCheckout}
+						setShow={setShowCheckout}
+						plan={plan}
+					/>
 				</Elements>
 			)}
 		</>

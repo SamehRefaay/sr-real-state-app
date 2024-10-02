@@ -6,11 +6,24 @@ import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import { getUserById } from '@/lib/actions/user';
 import UploadAvatar from './_components/UploadAvatar';
 import Link from 'next/link';
+import prisma from '@/lib/prisma';
 
 const ProfilePage = async () => {
 	const { getUser } = await getKindeServerSession();
 	const user = await getUser();
 	const dbUser = await getUserById(user ? user.id : '');
+
+	const userSubscription = await prisma.subscription.findFirst({
+		where: {
+			userId: dbUser?.id,
+		},
+		include: {
+			plan: true,
+		},
+		orderBy: {
+			createdAt: 'desc',
+		},
+	});
 
 	return (
 		<div>
@@ -39,10 +52,27 @@ const ProfilePage = async () => {
 					<Attribute title="Properties Posted" value={1} />
 				</div>
 			</Card>
-			<Card className="m-4 p-4">
+			<Card className="m-4 p-4 ">
 				<SectionTitle title="Subscription Information" />
-				{/* todo adding user subscription plan info */}
-				<Button color="primary">
+				{userSubscription ? (
+					<div className="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+						<Attribute title="Plan" value={userSubscription.plan.name} />
+						<Attribute
+							title="Price"
+							value={`$${userSubscription.plan.price}`}
+						/>
+						<Attribute
+							title="Purchased On"
+							value={userSubscription.createdAt.toLocaleDateString()}
+						/>
+					</div>
+				) : (
+					<div className="flex flex-col items-center">
+						<p className="text-center">No Subscription Found!</p>
+					</div>
+				)}
+
+				<Button className="w-max mt-4 mx-auto" color="primary">
 					<Link href="/user/subscription">Purchase Your Subscription</Link>
 				</Button>
 			</Card>

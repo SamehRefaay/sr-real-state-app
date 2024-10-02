@@ -32,8 +32,8 @@ const Plan = ({ plan }: { plan: SubscriptionPlan }) => {
 					${plan.price.toString()}
 				</h2>
 				<hr />
-				{plan.features.split(',').map(feature => (
-					<p key={feature} className="text-sm text-slate-600">
+				{plan.features.split(',').map((feature, index) => (
+					<p key={`${feature}${index}`} className="text-sm text-slate-600">
 						{feature.trim()}
 					</p>
 				))}
