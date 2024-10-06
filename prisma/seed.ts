@@ -118,6 +118,36 @@ const usersData = Array.from({ length: 10 }).map(() => ({
 	avatarUrl: faker.image.avatar(),
 }));
 
+const subscriptionPlansData = [
+	{
+		id: 1001,
+		name: 'Basic',
+		price: 0,
+		propertyLimit: 3,
+		imagesPerPropertyLimit: 3,
+		features:
+			'Free for Lifetime, Property Listing, Property Details, 3 Images per Property, 3 Property Limit, Property Search',
+	},
+	{
+		id: 1002,
+		name: 'Standard',
+		price: 10,
+		propertyLimit: 10,
+		imagesPerPropertyLimit: 5,
+		features:
+			'Property Listing, Property Details, 5 Images per Property, 10 Property Limit, Property Search, AI Support, 24/7 Support on Email',
+	},
+	{
+		id: 1003,
+		name: 'Premium',
+		price: 25,
+		propertyLimit: 100,
+		imagesPerPropertyLimit: 15,
+		features:
+			'Property Listing, Property Details, 15 Images per Property, 100 Property Limit, Property Search, AI Support, 24/7 Support on Email, 24/7 Support on Phone, Personal Account Manger',
+	},
+];
+
 const fakeUserProperties = Array.from({ length: 50 }).map(() => {
 	const fakeType = faker.helpers.arrayElement(propertyTypes);
 	const fakeStatus = faker.helpers.arrayElement(propertyStatus);
@@ -198,24 +228,28 @@ async function main() {
 
 	// });
 
-	const fakeId = faker.string.uuid();
-
-	const fakeUser = await prisma.user.upsert({
-		where: {
-			id: fakeId,
-		},
-		update: {},
-		create: {
-			id: fakeId,
-			firstName: faker.person.firstName(),
-			lastName: faker.person.lastName(),
-			email: faker.internet.email(),
-			avatarUrl: faker.image.avatar(),
-			property: {
-				create: fakeUserProperties,
-			},
-		},
+	await prisma.subscriptionPlan.createMany({
+		data: subscriptionPlansData,
 	});
+
+	// const fakeId = faker.string.uuid();
+
+	// const fakeUser = await prisma.user.upsert({
+	// 	where: {
+	// 		id: fakeId,
+	// 	},
+	// 	update: {},
+	// 	create: {
+	// 		id: fakeId,
+	// 		firstName: faker.person.firstName(),
+	// 		lastName: faker.person.lastName(),
+	// 		email: faker.internet.email(),
+	// 		avatarUrl: faker.image.avatar(),
+	// 		property: {
+	// 			create: fakeUserProperties,
+	// 		},
+	// 	},
+	// });
 }
 
 main()
