@@ -33,7 +33,5 @@ export async function GET() {
 	}
 
 	//redirect to homepage //'http://localhost:3000'
-	return NextResponse.redirect(
-		'https://sr-real-state-8vwrearfj-samehrefaays-projects.vercel.app/'
-	);
+	return NextResponse.redirect('https://sr-real-state-app.vercel.app/');
 }
