@@ -3,6 +3,11 @@ import { Button, Card, MenuItem } from '@nextui-org/react';
 import { SubscriptionPlan } from '@prisma/client';
 import SubscriptionButton from './_components/SubscriptionButton';
 import PageTitle from '@/app/components/PageTitle';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+	title: 'My Subscription',
+};
 
 const SubscriptionPage = async () => {
 	const subscriptionPlansPromise = prisma.subscriptionPlan.findMany({});

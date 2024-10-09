@@ -1,3 +1,4 @@
+import { Metadata } from 'next';
 import { prisma } from '../lib/prisma';
 import PropertiesContainer from './components/PropertiesContainer';
 import Search from './components/Search';
@@ -7,6 +8,10 @@ const PAGE_SIZE = 12;
 interface Props {
 	searchParams: { [key: string]: string | string[] | undefined };
 }
+
+export const metadata: Metadata = {
+	title: 'Home',
+};
 
 export default async function Home({ searchParams }: Props) {
 	const pagenum = searchParams.pagenum ?? 0;

@@ -2,13 +2,29 @@ import { ImagesSlider } from '@/app/components/ImageSlider';
 import PageTitle from '@/app/components/PageTitle';
 import prisma from '@/lib/prisma';
 import { Card } from '@nextui-org/react';
+import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import { title } from 'process';
 
 interface Props {
 	params: {
 		id: string;
 	};
 }
+
+export const generateMetadata = async ({
+	params,
+}: Props): Promise<Metadata> => {
+	const property = await prisma.property.findUnique({
+		where: {
+			id: +params.id,
+		},
+	});
+	return {
+		title: `${property?.name}`,
+		description: `${property?.description}`,
+	};
+};
 
 const PropertyDetails = async ({ params }: Props) => {
 	const property = await prisma.property.findUnique({

@@ -1,10 +1,15 @@
 import prisma from '@/lib/prisma';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import PropertiesTable from './_components/PropertiesTable';
+import { Metadata } from 'next';
 
 interface Props {
 	searchParams: { [key: string]: string | string[] | undefined };
 }
+
+export const metadata: Metadata = {
+	title: 'My Properties',
+};
 
 const PAGE_SIZE = 12;
 

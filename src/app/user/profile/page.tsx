@@ -7,6 +7,11 @@ import { getUserById } from '@/lib/actions/user';
 import UploadAvatar from './_components/UploadAvatar';
 import Link from 'next/link';
 import prisma from '@/lib/prisma';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+	title: 'My Profile',
+};
 
 const ProfilePage = async () => {
 	const { getUser } = await getKindeServerSession();
