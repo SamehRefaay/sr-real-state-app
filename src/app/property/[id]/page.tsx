@@ -4,7 +4,6 @@ import prisma from '@/lib/prisma';
 import { Card } from '@nextui-org/react';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { title } from 'process';
 
 interface Props {
 	params: {

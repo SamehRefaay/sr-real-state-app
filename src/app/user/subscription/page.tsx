@@ -6,7 +6,7 @@ import PageTitle from '@/app/components/PageTitle';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-	title: 'My Subscription',
+	title: 'Purchase Your Subscription',
 };
 
 const SubscriptionPage = async () => {
